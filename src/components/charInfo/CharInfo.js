@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -26,11 +27,6 @@ class CharInfo extends Component {
             this.updateChar();
         }
     }
-
-/*     componentDidCatch(err, info){
-        console.log(err, info);
-        this.setState({error: true});
-    } */
 
     updateChar = () => {
         const {charId} = this.props;
@@ -129,6 +125,10 @@ const View = ({char}) => {
             </ul>
         </>
     )
+}
+
+CharInfo.propTypes = {
+    charId: PropTypes.number
 }
 
 export default CharInfo;
