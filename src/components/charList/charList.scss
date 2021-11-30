@@ -1,6 +1,36 @@
 @import '../../style/variables.scss';
 
+/* .char__item-enter {
+    opacity: 0;
+}
+.char__item-enter-active {
+    opacity: 1;
+    transition: opacity 500ms;
+}
+.char__item-exit {
+    opacity: 1;
+}
+.char__item-exit-active {
+    opacity: 0;
+    transition: opacity 500ms;
+} */
+  
+
 .char {
+    &__item-enter {
+        opacity: 0;
+    }
+    &__item-enter-active {
+        opacity: 1;
+        transition: opacity 500ms;
+    }
+    &__item-exit {
+        opacity: 1;
+    }
+    &__item-exit-active {
+        opacity: 0;
+        transition: opacity 500ms;
+    }
     &__content {
         margin-top: 50px;
         display: grid;
@@ -31,6 +61,20 @@
         &_selected {
             box-shadow: 0 5px 20px $main-color;
             transform: translateY(-8px);
+        }
+        &-enter {
+            opacity: 0;
+        }
+        &-enter-active {
+            opacity: 1;
+            transition: opacity 800ms;
+        }
+        &-exit {
+            opacity: 1;
+        }
+        &-exit-active {
+            opacity: 0;
+            transition: opacity 800ms;
         }
     }
     &__name {

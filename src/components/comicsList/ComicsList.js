@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -49,24 +50,25 @@ const ComicsList = (props) => {
     function renderItems(arr) {
         const items =  arr.map((item, i) => {
             return (
-                <li className="comics__item" key={i}
-                    /* onClick={() => {
-                        props.onComicsSelected(item.id)
-                        focusOnItem(i);
-                    }} */
-                    >
-                    <Link to={`/comics/${item.id}`}>
-                        <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
-                        <div className="comics__item-name">{item.title}</div>
-                        <div className="comics__item-price">{item.price}</div>
-                    </Link>
-                </li>
+                <CSSTransition key={item.id} timeout={800} classNames="comics__item">
+                    <li className="comics__item" key={i}>
+                        <Link to={`/comics/${item.id}`}>
+                            <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
+                            <div className="comics__item-name">{item.title}</div>
+                            <div className="comics__item-price">{item.price}</div>
+                        </Link>
+                    </li>
+                </CSSTransition>
+                
             )
         });
 
         return (
             <ul className="comics__grid">
-                {items}
+                <TransitionGroup component={null}>
+                    {items}
+                </TransitionGroup>
+                
             </ul>
         )
     }
