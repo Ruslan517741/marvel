@@ -48,6 +48,7 @@ const ComicsList = (props) => {
 
     
     function renderItems(arr) {
+        
         const items =  arr.map((item, i) => {
             return (
                 <CSSTransition key={item.id} timeout={800} classNames="comics__item">

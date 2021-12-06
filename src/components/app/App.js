@@ -10,8 +10,7 @@ const ComicsPage = lazy(() => import('../pages/ComicsPage'));
 const SingleComicPage = lazy(() => import('../pages/SingleComicPage'));
 
 const App = () => {
-
-
+    const pathOf = "/comics";
 
     return (
         <Router>
@@ -26,7 +25,7 @@ const App = () => {
                             <Route exact path="/comics">
                                 <ComicsPage/>
                             </Route>
-                            <Route exact path="/comics/:comicId">
+                            <Route path="/:comicId">
                                 <SingleComicPage/>
                             </Route>
                             <Route path="*">
