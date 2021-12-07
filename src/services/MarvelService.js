@@ -4,23 +4,34 @@ const useMarvelService = () => {
     const {loading, request, error, clearError} = useHttp();
 
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
-    const _apiKey = 'apikey=ad796d198ab7f64772092abd9c4347d0';
+    // ЗДЕСЬ БУДЕТ ВАШ КЛЮЧ, ЭТОТ КЛЮЧ МОЖЕТ НЕ РАБОТАТЬ
+    const _apiKey = 'apikey=c5d6fc8b83116d92ed468ce36bac6c62';
     const _baseOffset = 210;
+
+
 
     const getAllCharacters = async (offset = _baseOffset) => {
         const res = await request(`${_apiBase}characters?limit=9&offset=${offset}&${_apiKey}`);
         return res.data.results.map(_transformCharacter);
     }
 
-    const getCharacter = async (id) => {
-        const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
-        return _transformCharacter(res.data.results[0]);
-    }
+    // Вариант модификации готового метода для поиска по имени. 
+    // Вызывать его можно вот так: getAllCharacters(null, name)
+
+    // const getAllCharacters = async (offset = _baseOffset, name = '') => {
+    //     const res = await request(`${_apiBase}characters?limit=9&offset=${offset}${name ? `&name=${name}` : '' }&${_apiKey}`);
+    //     return res.data.results.map(_transformCharacter);
+    // }
+
+    // Или можно создать отдельный метод для поиска по имени
 
     const getCharacterByName = async (name) => {
-        console.log(name);
         const res = await request(`${_apiBase}characters?name=${name}&${_apiKey}`);
-        /* ${Captain%20Universe} */
+        return res.data.results.map(_transformCharacter);
+    }
+
+    const getCharacter = async (id) => {
+        const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
         return _transformCharacter(res.data.results[0]);
     }
 
@@ -34,24 +45,14 @@ const useMarvelService = () => {
         return _transformComics(res.data.results[0]);
     }
 
-    const getSingleItem = async (path) => {
-        const res = await request(`${_apiBase}${path}?${_apiKey}`);
-        if (path.slice(1, 7) === 'comics') {
-            return _transformComics(res.data.results[0]);
-        } else {
-            return _transformCharacter(res.data.results[0]);
-        }
-        
-    }
-
     const _transformCharacter = (char) => {
         return {
+            id: char.id,
             name: char.name,
             description: char.description ? `${char.description.slice(0, 210)}...` : 'There is no description for this character',
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
             homepage: char.urls[0].url,
             wiki: char.urls[1].url,
-            id: char.id,
             comics: char.comics.items
         }
     }
@@ -68,7 +69,7 @@ const useMarvelService = () => {
         }
     }
 
-    return {loading, error, clearError, getAllCharacters, getCharacter, getCharacterByName, getAllComics, getComic, getSingleItem}
+    return {loading, error, clearError, getAllCharacters, getCharacterByName, getCharacter, getAllComics, getComic}
 }
 
 export default useMarvelService;
